@@ -1,3 +1,3 @@
 const { createContext } = require("react");
 
-export const PopularContext = createContext();
+export const ProductContext = createContext();
