@@ -1,15 +1,18 @@
-// import React, { useContext } from "react";
+import { useContext } from "react";
+import { FaV } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
-// import { ProductContext } from "../../context";
+import { ProductContext } from "../../context";
 
 const Header = () => {
-//   const { favorite } = useContext(ProductContext)
-//   const nav = useNavigate();
-
+  const { favorite } = useContext(ProductContext);
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
-      <div className=" container max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <div
+        style={{
+          position: "relative",
+        }}
+        className=" container max-w-screen-xl flex  items-center justify-between mx-auto p-4"
+      >
         <a
           href="https://flowbite.com/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -157,11 +160,36 @@ const Header = () => {
             </li>
             <li>
               <Link
-                // onClick={() => nav("/favorite")}
                 to="/favorite"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Favorite
+              </Link>
+
+              {favorite.length ? (
+                <h1
+                  style={{
+                    position: "absolute",
+                    marginTop: "-35px",
+                    marginLeft: "60px",
+                    width: "25px",
+                    height: "25px",
+                    background: "red",
+                    borderRadius: "50%",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  {favorite.length}
+                </h1>
+              ) : null}
+            </li>
+            <li>
+              <Link
+                to="/basket"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              >
+                Basket
               </Link>
             </li>
           </ul>

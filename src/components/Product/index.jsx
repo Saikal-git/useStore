@@ -1,17 +1,22 @@
 import React, { useContext, useState } from "react";
 import { ProductContext } from "../../context";
 import ProductCard from "../ProductCard";
+import { Link } from "react-router-dom";
+import AddProduct from "../AddProduct";
 
 const Product = () => {
   const { product, setProduct } = useContext(ProductContext);
   const [sort, setSort] = useState(false);
 
   const selectSort = (e) => {
-    let tar = e.target.value;
     if (sort === "cheap") {
       setProduct(product?.sort((a, b) => b.price - a.price));
     } else if (sort === "expensive") {
       setProduct(product?.sort((a, b) => a.price - b.price));
+    } else if (sort === "a-z") {
+      setProduct(product?.sort((a, b) => (a.title > b.title ? "1" : "-1")));
+    } else if (sort === "z-a") {
+      setProduct(product?.sort((a, b) => (b.title < a.title ? "-1" : "1")));
     }
   };
 
@@ -60,12 +65,13 @@ const Product = () => {
                 <h3 class="text-lg font-medium">This is a warning alert</h3>
               </div>
               <div class="mt-2 mb-4 text-sm">
-                More info about this info warning goes here. This example text
-                is going to run a bit longer so that you can see how spacing
-                within an alert works with this kind of content.
+                У вас еще нет продуктов,что бы добавить продукт вы можете
+                перейти по кнопке.
               </div>
               <div class="flex">
-                <button
+                <Link
+                  to={"/addproduct"}
+                  onClick={() => <AddProduct />}
                   type="button"
                   class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800"
                 >
@@ -79,7 +85,7 @@ const Product = () => {
                     <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
                   </svg>
                   View more
-                </button>
+                </Link>
                 <button
                   type="button"
                   class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800"

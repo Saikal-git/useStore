@@ -1,11 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { ProductContext } from "../../context";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ el }) => {
-  const { favorite, setFavorite } = useContext(ProductContext);
+  const { favorite, setFavorite, basket, setBasket } =
+    useContext(ProductContext);
+  const [bg, setBg] = useState(false);
+  const nav = useNavigate();
   const someFavorite = el && favorite?.some((ell) => ell.id === el.id);
   const addToFavorite = (data) => {
     let findFavorite = favorite?.find((item) => item.id === data.id);
@@ -20,7 +24,12 @@ const ProductCard = ({ el }) => {
       localStorage.setItem("favorite", JSON.stringify([...favorite, data]));
     }
   };
-
+  const basketProduct = (data) => {
+    setBasket([...basket, data]);
+    localStorage.setItem("basket", JSON.stringify([...basket, data]));
+    setBg(true); // Изменяем значение bg на true при добавлении в корзину
+  };
+  console.log(basket, "bas");
   return (
     <div className="position-relative w-full max-w-[350px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
       <Zoom>
@@ -37,7 +46,7 @@ const ProductCard = ({ el }) => {
             <div className="flex items-center space-x-1 rtl:space-x-reverse">
               <svg
                 className="w-4 h-4 text-yellow-300"
-                ariaHidden="true"
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"
                 viewBox="0 0 22 20"
@@ -101,10 +110,14 @@ const ProductCard = ({ el }) => {
           </span>
 
           <a
+            style={{
+              background: bg ? "orange" : "blue",
+            }}
+            onClick={() => (bg ? nav("/basket") : basketProduct(el))}
             href="#"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Add to cart
+            {bg ? "Added to basket" : "Add to cart"}
           </a>
         </div>
       </div>
