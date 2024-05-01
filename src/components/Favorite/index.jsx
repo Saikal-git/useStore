@@ -8,15 +8,19 @@ const Favorite = () => {
   const { favorite, setFavorite } = useContext(ProductContext);
 
   const deleteFavorite = (data) => {
-    let delFavorite = favorite.filter((el) => el.id !== data.id);
-    setFavorite(delFavorite);
-    localStorage.setItem("favorite", JSON.stringify(delFavorite));
+    if (data && data.id) {
+      let delFavorite = favorite.filter((el) => el.id !== data.id);
+      setFavorite(delFavorite);
+      localStorage.setItem("favorite", JSON.stringify(delFavorite));
+    } else {
+      console.error("Invalid data or missing id property");
+    }
   };
 
   return (
     <div id="favorite">
       <div className="container">
-        <div className="mt-[50px]">
+        <div className="mt-[50px] mb-8">
           {favorite.length ? (
             <div className="w-[70%] overflow-y-scroll h-[500px]">
               {favorite?.map((el, idx) => (

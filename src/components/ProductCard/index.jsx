@@ -10,7 +10,8 @@ const ProductCard = ({ el }) => {
     useContext(ProductContext);
   const [bg, setBg] = useState(false);
   const nav = useNavigate();
-  const someFavorite = el && favorite?.some((ell) => ell.id === el.id);
+  const someFavorite = favorite?.some((ell) => ell.id === el.id);
+  const someBas = basket?.some((ell) => ell.id === el.id);
   const addToFavorite = (data) => {
     let findFavorite = favorite?.find((item) => item.id === data.id);
     if (findFavorite) {
@@ -27,7 +28,7 @@ const ProductCard = ({ el }) => {
   const basketProduct = (data) => {
     setBasket([...basket, data]);
     localStorage.setItem("basket", JSON.stringify([...basket, data]));
-    setBg(true); // Изменяем значение bg на true при добавлении в корзину
+    // setBg(true);
   };
   console.log(basket, "bas");
   return (
@@ -111,13 +112,13 @@ const ProductCard = ({ el }) => {
 
           <a
             style={{
-              background: bg ? "orange" : "blue",
+              background: someBas ? "orange" : "blue",
             }}
-            onClick={() => (bg ? nav("/basket") : basketProduct(el))}
+            onClick={() => (someBas ? nav("/basket") : basketProduct(el))}
             href="#"
-            className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center "
           >
-            {bg ? "Added to basket" : "Add to cart"}
+            {someBas ? "Go to basket" : "Add to cart"}
           </a>
         </div>
       </div>

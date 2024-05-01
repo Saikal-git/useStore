@@ -41,6 +41,7 @@ const AddProduct = () => {
       messageError();
     } else {
       let newProduct = {
+        quantity: 1,
         id: product.length ? product[product.length - 1].id + 1 : 1,
         url: productImg,
         title: productName,

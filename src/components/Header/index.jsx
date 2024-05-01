@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ProductContext } from "../../context";
 
 const Header = () => {
-  const { favorite } = useContext(ProductContext);
+  const { favorite, basket } = useContext(ProductContext);
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div
@@ -124,7 +124,7 @@ const Header = () => {
                 />
               </svg>
             </div>
-            <input
+            <input 
               type="text"
               id="search-navbar"
               className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -172,8 +172,9 @@ const Header = () => {
                     position: "absolute",
                     marginTop: "-35px",
                     marginLeft: "60px",
-                    width: "25px",
-                    height: "25px",
+                    width: "20px",
+                    height: "20px",
+                    fontSize: "12px",
                     background: "red",
                     borderRadius: "50%",
                     color: "white",
@@ -191,6 +192,24 @@ const Header = () => {
               >
                 Basket
               </Link>
+              {basket.length ? (
+                <h1
+                  style={{
+                    position: "absolute",
+                    marginTop: "-35px",
+                    marginLeft: "50px",
+                    width: "20px",
+                    height: "20px",
+                    fontSize: "12px",
+                    background: "red",
+                    borderRadius: "50%",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  {basket.length}
+                </h1>
+              ) : null}
             </li>
           </ul>
         </div>
