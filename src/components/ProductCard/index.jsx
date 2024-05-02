@@ -3,7 +3,7 @@ import { FaHeart } from "react-icons/fa";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
 import { ProductContext } from "../../context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductCard = ({ el }) => {
   const { favorite, setFavorite, basket, setBasket } =
@@ -37,11 +37,13 @@ const ProductCard = ({ el }) => {
         <img className="p-8 rounded-t-lg" src={el.url} alt="product image" />
       </Zoom>
       <div className="px-5 pb-5">
-        <a href="#">
+        <Link
+        to={`/productdetails/${el.id}`}
+        href="#">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {el.title}
           </h5>
-        </a>
+        </Link>
         <div className="flex items-center mt-2.5 mb-5 justify-between">
           <div className="flex items-center gap-3">
             <div className="flex items-center space-x-1 rtl:space-x-reverse">

@@ -1,12 +1,28 @@
-import { useContext } from "react";
-import { FaV } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+// import { FaV } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context";
 
 const Header = () => {
   const { favorite, basket } = useContext(ProductContext);
+  let { product, setProduct } = useContext(ProductContext);
+  const [inputValue, setInputValue] = useState("");
+  let nav = useNavigate();
+
+  const handleSearchInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === "Enter") {
+      setProduct([product.filter((el) => el.title.includes(inputValue))]);
+      console.log(product);
+      // nav(`/search${el.id}`)
+    }
+  };
+
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white sticky top-0 z-10 border-gray-200 dark:bg-gray-900">
       <div
         style={{
           position: "relative",
@@ -75,6 +91,10 @@ const Header = () => {
               id="search-navbar"
               className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search..."
+              value={inputValue}
+              onInput={(e) => setInputValue(e.target.value)}
+              onChange={handleSearchInputChange}
+              onKeyPress={handleSearchKeyPress}
             />
           </div>
           <button
@@ -124,7 +144,7 @@ const Header = () => {
                 />
               </svg>
             </div>
-            <input 
+            <input
               type="text"
               id="search-navbar"
               className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

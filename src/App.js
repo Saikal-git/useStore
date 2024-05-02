@@ -6,6 +6,8 @@ import Product from "./components/Product";
 import AddProduct from "./components/AddProduct";
 import Favorite from "./components/Favorite";
 import Basket from "./components/Basket";
+import Search from "./components/Search";
+import ProductDatails from "./components/ProductDatails";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/product" element={<Product />} />
         <Route path="/favorite" element={<Favorite/>} />
         <Route path="/basket" element={<Basket/>} />
+        <Route path="/productdetails/:elId" element={<ProductDatails/>} />
       </Routes>
     </div>
   );
