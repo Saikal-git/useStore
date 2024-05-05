@@ -1,34 +1,20 @@
-import { useContext, useState } from "react";
-// import { FaV } from "react-icons/fa6";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context";
 
 const Header = () => {
-  const { favorite, basket } = useContext(ProductContext);
-  let { product, setProduct } = useContext(ProductContext);
-  const [inputValue, setInputValue] = useState("");
-  let nav = useNavigate();
-
-  const handleSearchInputChange = (e) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleSearchKeyPress = (e) => {
+  const [search1, setSearch] = useState("");
+  const { basket } = useContext(ProductContext);
+  const { favorite } = useContext(ProductContext);
+  const nav = useNavigate();
+  const getSearch = (e) => {
     if (e.key === "Enter") {
-      setProduct([product.filter((el) => el.title.includes(inputValue))]);
-      console.log(product);
-      // nav(`/search${el.id}`)
+      nav(`/search/${search1}`);
     }
   };
-
   return (
-    <nav className="bg-white sticky top-0 z-10 border-gray-200 dark:bg-gray-900">
-      <div
-        style={{
-          position: "relative",
-        }}
-        className=" container max-w-screen-xl flex  items-center justify-between mx-auto p-4"
-      >
+    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a
           href="https://flowbite.com/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -91,10 +77,8 @@ const Header = () => {
               id="search-navbar"
               className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search..."
-              value={inputValue}
-              onInput={(e) => setInputValue(e.target.value)}
-              onChange={handleSearchInputChange}
-              onKeyPress={handleSearchKeyPress}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => getSearch(e)}
             />
           </div>
           <button
@@ -161,13 +145,12 @@ const Header = () => {
                 Home
               </Link>
             </li>
-
             <li>
               <Link
-                to="/addproduct"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                to="/addProduct"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                AddProduct
+                Add Product
               </Link>
             </li>
             <li>
@@ -192,9 +175,8 @@ const Header = () => {
                     position: "absolute",
                     marginTop: "-35px",
                     marginLeft: "60px",
-                    width: "20px",
-                    height: "20px",
-                    fontSize: "12px",
+                    width: "25px",
+                    height: "25px",
                     background: "red",
                     borderRadius: "50%",
                     color: "white",
@@ -212,26 +194,25 @@ const Header = () => {
               >
                 Basket
               </Link>
-              {basket.length ? (
-                <h1
-                  style={{
-                    position: "absolute",
-                    marginTop: "-35px",
-                    marginLeft: "50px",
-                    width: "20px",
-                    height: "20px",
-                    fontSize: "12px",
-                    background: "red",
-                    borderRadius: "50%",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  {basket.length}
-                </h1>
-              ) : null}
             </li>
           </ul>
+          {basket.length ? (
+            <h1
+              style={{
+                position: "absolute",
+                marginTop: "-20px",
+                marginLeft: "435px",
+                width: "25px",
+                height: "25px",
+                background: "red",
+                borderRadius: "50%",
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              {basket.length}
+            </h1>
+          ) : null}
         </div>
       </div>
     </nav>

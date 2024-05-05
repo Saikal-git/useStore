@@ -6,8 +6,8 @@ import Product from "./components/Product";
 import AddProduct from "./components/AddProduct";
 import Favorite from "./components/Favorite";
 import Basket from "./components/Basket";
-import Search from "./components/Search";
 import ProductDatails from "./components/ProductDatails";
+import Search from "./components/Search";
 
 function App() {
   return (
@@ -15,11 +15,12 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/addproduct" element={<AddProduct/>} />
+        <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/product" element={<Product />} />
-        <Route path="/favorite" element={<Favorite/>} />
-        <Route path="/basket" element={<Basket/>} />
-        <Route path="/productdetails/:elId" element={<ProductDatails/>} />
+        <Route path="/favorite" element={<Favorite />} />
+        <Route path="/basket" element={<Basket />} />
+        <Route path="/search/:title" element={<Search />} />
+        <Route path="/productdetails/:elId" element={<ProductDatails />} />
       </Routes>
     </div>
   );

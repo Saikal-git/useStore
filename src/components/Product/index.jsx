@@ -1,50 +1,49 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context";
 import ProductCard from "../ProductCard";
 import { Link } from "react-router-dom";
 import AddProduct from "../AddProduct";
 
 const Product = () => {
-  const { product, setProduct } = useContext(ProductContext);
-  const [sort, setSort] = useState(false);
+  const [sort, setSort] = useState("");
+  let { product, setProduct } = useContext(ProductContext);
 
-  const selectSort = (e) => {
+  const sortProduct = () => {
     if (sort === "cheap") {
-      setProduct(product?.sort((a, b) => b.price - a.price));
+      setProduct(product.sort((a, b) => b.price - a.price));
     } else if (sort === "expensive") {
-      setProduct(product?.sort((a, b) => a.price - b.price));
-    } else if (sort === "a-z") {
-      setProduct(product?.sort((a, b) => (a.title > b.title ? "1" : "-1")));
-    } else if (sort === "z-a") {
-      setProduct(product?.sort((a, b) => (b.title < a.title ? "-1" : "1")));
+      setProduct(product.sort((a, b) => a.price - b.price));
+    } else if (sort === "A-Z") {
+      setProduct(product.sort((a, b) => b.title.localeCompare(a.title)));
+    } else if (sort === "Z-A") {
+      setProduct(product.sort((a, b) => a.title.localeCompare(b.title)));
     }
   };
 
   return (
     <div id="product">
-      <div className="mt-[75px]">
+      <div className="mt-[50px]">
         <div className="container">
-          {product.length > 0 ? (
-            <>
+          {product.length ? (
+            <div className="">
               <select
                 onChange={(e) => {
                   setSort(e.target.value);
-                  selectSort();
+                  sortProduct();
                 }}
-                className="bg-gray-50 mt-4 border w-[20%] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border w-[20%] mt-4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
                 <option value="expensive">Expensive</option>
                 <option value="cheap">Cheap</option>
-                <option value="a-z">A-Z</option>
-                <option value="z-a">Z-A</option>
+                <option value="A-Z">A-Z</option>
+                <option value="Z-A">Z-A</option>
               </select>
-
-              <div className=" mt-10  flex items-center justify-start flex-wrap gap-[40px]">
+              <div className="flex items-center flex-wrap gap-[60px] my-10">
                 {product.map((el, idx) => (
                   <ProductCard el={el} key={idx} />
                 ))}
               </div>
-            </>
+            </div>
           ) : (
             <div
               id="alert-additional-content-4"

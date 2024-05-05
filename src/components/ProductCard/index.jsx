@@ -1,23 +1,21 @@
-import { useContext, useEffect, useState } from "react";
-import { FaHeart } from "react-icons/fa";
+
+import React, { useContext, useState } from "react";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { FaHeart } from "react-icons/fa";
 import { ProductContext } from "../../context";
 import { Link, useNavigate } from "react-router-dom";
 
 const ProductCard = ({ el }) => {
-  const { favorite, setFavorite, basket, setBasket } =
-    useContext(ProductContext);
-  const [bg, setBg] = useState(false);
+  const { basket, setBasket } = useContext(ProductContext);
+  const { favorite, setFavorite } = useContext(ProductContext);
   const nav = useNavigate();
-  const someFavorite = favorite?.some((ell) => ell.id === el.id);
-  const someBas = basket?.some((ell) => ell.id === el.id);
+  const someFavorite = favorite.some((ell) => ell.id === el.id);
+  const someBas = basket.some((ell) => ell.id === el.id);
   const addToFavorite = (data) => {
-    let findFavorite = favorite?.find((item) => item.id === data.id);
+    let findFavorite = favorite.find((item) => item.id === data.id);
     if (findFavorite) {
-      let filterFavorite = favorite?.filter(
-        (element) => element.id !== data.id
-      );
+      let filterFavorite = favorite.filter((item) => item.id !== data.id);
       setFavorite(filterFavorite);
       localStorage.setItem("favorite", JSON.stringify(filterFavorite));
     } else {
@@ -27,19 +25,17 @@ const ProductCard = ({ el }) => {
   };
   const basketProduct = (data) => {
     setBasket([...basket, data]);
-    localStorage.setItem("basket", JSON.stringify([...basket, data]));
-    // setBg(true);
+    localStorage.setItem("basket", JSON.stringify([...basket, data]))
   };
+
   console.log(basket, "bas");
   return (
-    <div className="position-relative w-full max-w-[350px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700  ">
+    <div className="w-full max-w-[350px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Zoom>
         <img className="p-8 rounded-t-lg" src={el.url} alt="product image" />
       </Zoom>
       <div className="px-5 pb-5">
-        <Link
-        to={`/productdetails/${el.id}`}
-        href="#">
+        <Link to={`/productDetails/${el.id}`}>
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
             {el.title}
           </h5>
@@ -98,27 +94,23 @@ const ProductCard = ({ el }) => {
             </span>
           </div>
           <a
-            style={{
-              color: someFavorite ? "red" : "black",
+            onClick={() => {
+              addToFavorite(el);
             }}
-            className="text-3xl"
-            onClick={() => addToFavorite(el)}
+            style={{ color: someFavorite ? "red" : "black" }}
+            className="text-white text-3xl"
           >
             <FaHeart />
           </a>
         </div>
         <div className="flex items-center justify-between">
           <span className="text-3xl font-bold text-gray-900 dark:text-white">
-            {el.price} $
+            {el.price}$
           </span>
 
           <a
-            style={{
-              background: someBas ? "orange" : "blue",
-            }}
-            onClick={() => (someBas ? nav("/basket") : basketProduct(el))}
-            href="#"
-            className="text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+            onClick={someBas ? () => nav("/basket") : () => basketProduct(el)}
+            className={`text-white cursor-pointer ${someBas ? "bg-orange-600" : "bg-blue-600"}  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center`}
           >
             {someBas ? "Go to basket" : "Add to cart"}
           </a>
